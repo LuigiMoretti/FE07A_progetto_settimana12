@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/auth/auth.service';
     <div class="container mt-4">
       <ul class="list-group">
         <p>Utente: {{welcomeUser}}</p>
-        <li *ngFor="let preferito of preferiti">Lista preferiti: {{preferito.title}}{{preferito.codicePreferito}}</li>
+        <li *ngFor="let preferito of preferiti">Lista preferiti: {{preferito.title}}</li>
       </ul>
       <hr />
       <router-outlet></router-outlet>

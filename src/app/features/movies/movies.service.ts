@@ -12,7 +12,7 @@ import { AuthData, AuthService } from 'src/app/auth/auth.service';
 export class MovieService {
   baseURL = 'http://localhost:4201/api/movies-popular';
   movies: Movie[] | undefined;
-  preferiti: Movie[] = [];
+  preferiti: Movie[] | undefined;
   liked: boolean = false;
   favoritesCounter = 0;
   constructor(private http: HttpClient, private authSrv: AuthService) {}
@@ -28,6 +28,9 @@ export class MovieService {
       .toPromise();
     console.log(user.accessToken);
     this.movies = movies;
+    if (!this.preferiti) {
+      this.getFavourite();
+    }
   }
 
   async addFavorite(movie: Movie) {
@@ -65,8 +68,8 @@ export class MovieService {
         for (let i of res) {
           for (let j of this.movies!) {
             if (i.movieId == j.id) {
-              this.preferiti.push(j);
-              this.preferiti[this.preferiti.indexOf(j)].codicePreferito = i.id;
+              this.preferiti!.push(j);
+              this.preferiti![this.preferiti!.indexOf(j)].codicePreferito = i.id;
               j.like = true;
             }
           }
@@ -80,15 +83,10 @@ export class MovieService {
       .toPromise()) as AuthData;
     console.log(user.accessToken);
     movie.like = false;
-    // const moviesget = await this.http
-    //   .get<Favourite>(`http://localhost:4201/api/favourites?id=${movie.codicePreferito}`)
-    //   .toPromise();
-    // console.log(user.accessToken);
-    // console.log(moviesget);
 
-    this.http.delete(
-      `http://localhost:4201/api/favourites/${movie.codicePreferito}`
-    ).subscribe();
+    this.http
+      .delete(`http://localhost:4201/api/favourites/${movie.codicePreferito}`)
+      .subscribe();
   }
 
   private getErrorMess(status: number) {
