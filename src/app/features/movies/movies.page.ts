@@ -21,7 +21,7 @@ import { HttpClient } from '@angular/common/http';
               <p class="card-text">{{ movie.overview }}</p>
               <p>{{ movie.popularity }}</p>
               <p>{{ movie.release_date }}</p>
-              <div *ngIf="preferiti?.length != 0">
+              <div *ngIf="preferiti">
                 <button *ngIf="movie.like" (click)="unlike(movie)">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +52,7 @@ import { HttpClient } from '@angular/common/http';
                   </svg>
                 </button>
               </div>
-              <button *ngIf="preferiti?.length == 0">
+              <button *ngIf="!preferiti">
                 Aspe carico i preferiti...
               </button>
             </div>
@@ -64,7 +64,7 @@ import { HttpClient } from '@angular/common/http';
   styles: [``],
 })
 export class MoviesPage implements OnInit {
-  constructor(private movieSrv: MovieService, private http: HttpClient) {}
+  constructor(private movieSrv: MovieService) {}
   movies!: Movie[] | undefined;
   preferiti: Movie[] | undefined;
   ngOnInit(): void {

@@ -4,7 +4,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { FavouritesPage } from './favourites.page';
 import { AuthGuard } from 'src/app/auth/auth.guard';
 import { FormsModule } from '@angular/forms';
-import { DeactivateGuard } from 'src/app/deactivate.guard';
 
 const routes: Routes = [
   {
