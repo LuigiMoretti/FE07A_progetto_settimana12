@@ -39,7 +39,7 @@ export class AuthService {
   }
 
   login(data: { email: string; password: string }) {
-    return this.http.post<AuthData>(`${this.URL}/login`, data).pipe(
+    return this.http.post<AuthData>(`${this.URL}/login`, data).pipe(
       tap((val) => {
         console.log(val);
       }),
@@ -70,7 +70,7 @@ export class AuthService {
 
   signup(data: SignupData) {
     return this.http
-      .post(`${this.URL}/register`, data)
+      .post(`${this.URL}/register`, data)
       .pipe(catchError(this.errors));
   }
 

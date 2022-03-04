@@ -57,19 +57,19 @@ import { HttpClient } from '@angular/common/http';
 })
 export class MoviesPage implements OnInit {
   constructor(private movieSrv: MovieService, private http: HttpClient) {}
-  movies: Movie[] | undefined;
+  movies=this.movieSrv.movies;
 
   ngOnInit(): void {
     setInterval(() => {
       this.movies = this.movieSrv.movies;
     }, 20);
     if(!this.movies){
-      this.movieSrv.buttaFilm()
+      this.movieSrv.buttaFilm();
     }
   }
 
-  like(movie: Movie) {
-    this.movieSrv.addFavorite(movie);
+  async like(movie: Movie) {
+     await(await (this.movieSrv.addFavorite(movie))).toPromise();
   }
 
   unlike(movie: Movie) {

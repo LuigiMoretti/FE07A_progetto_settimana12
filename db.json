@@ -5,30 +5,40 @@
       "password": "$2a$10$d0TQtCbvl9xsOcM5jVrg..msiezCFUOEDGOcUAgnKjITytIf.hnra",
       "name": "gatto",
       "surname": "miai",
-      "id": 1,
-      "preferiti": ""
-    },
-    {
-      "email": "miao@miao",
-      "password": "$2a$10$IR70I9JZN0qPA9rO1itJ7us8B6I3ZM3LgyNAKBHDYE9wnugHN3lOa",
-      "name": "luigi",
-      "surname": "moretti",
-      "id": 2,
-      "preferiti": ""
+      "id": 1
     },
     {
       "email": "cane@bau",
       "password": "$2a$10$al/qNlyq/e0jgxrdTM467uAsean1B2wnmqvV3Lqrn6iqZfKEQ6KKi",
       "name": "cane",
       "surname": "bau",
-      "id": 3
+      "id": 2
     },
     {
       "email": "zebra@bru",
       "password": "$2a$10$5u1H5.vySjvPMzCYw7.mweuFmThbZYLIMhauJXwASUN8DJdrZi5Re",
       "name": "zebra",
       "surname": "bru",
+      "id": 3
+    },
+    {
+      "email": "elefante@br",
+      "password": "$2a$10$1.Rm1OdlH4zbqg9TRrEbHOhr/04pn1iUo9q7CUIv8sLZdiFyyhLVi",
+      "name": "elefante",
+      "surname": "br",
       "id": 4
+    }
+  ],
+  "favourites": [
+    {
+      "movieId": 460465,
+      "userId": 4,
+      "id": 1
+    },
+    {
+      "movieId": 567189,
+      "userId": 4,
+      "id": 2
     }
   ],
   "movies-popular": [

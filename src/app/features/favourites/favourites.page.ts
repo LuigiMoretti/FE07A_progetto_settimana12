@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/auth/auth.service';
     <div class="container mt-4">
       <ul class="list-group">
         <p>Utente: {{welcomeUser}}</p>
-        <li *ngFor="let preferito of preferiti">Lista preferiti: {{preferito.title}}</li>
+        <li *ngFor="let preferito of preferiti">Lista preferiti: {{preferito.title}}{{preferito.codicePreferito}}</li>
       </ul>
       <hr />
       <router-outlet></router-outlet>
@@ -23,8 +23,12 @@ export class FavouritesPage implements OnInit {
   constructor( private authSrv: AuthService, private movieSrv: MovieService) {}
 
   ngOnInit(): void {
+    setInterval(() => {
+      this.preferiti = this.movieSrv.preferiti;
+    }, 20);
     this.authSrv.user$.subscribe((data) => {
       this.welcomeUser = data?.user.name;
-    })
+      this.movieSrv.getFavourite();
+    });
   }
 }
