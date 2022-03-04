@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Movie } from 'src/app/models/movie';
 import { Favourite } from 'src/app/models/favourite';
-import { catchError } from 'rxjs/operators';
+import { catchError, take } from 'rxjs/operators';
 import { Subject, throwError } from 'rxjs';
-import { AuthService } from 'src/app/auth/auth.service';
+import { AuthData, AuthService } from 'src/app/auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -25,13 +25,17 @@ export class MovieService {
     );
   }
 
-  buttaFilm(): void {
-    this.http
+  async buttaFilm(): Promise<void> {
+    const user: AuthData = (await this.authSrv.user$
+      .pipe(take(1))
+      .toPromise()) as AuthData;
+      console.log(user.accessToken)
+
+    const movies =  await this.http
       .get<Movie[]>('http://localhost:4201/api/movies-popular')
-      .subscribe((res) => {
-        this.movies = <Movie[]>res;
-        console.log(this.movies[0].poster_path);
-      });
+      .toPromise();
+      console.log(user.accessToken)
+      this.movies = movies;
 
     /*
   ngOnInit():void{
@@ -47,14 +51,12 @@ export class MovieService {
     this.preferiti.push(movie);
     this.favoritesCounter++;
     movie.like = true;
-
-
   }
 
   removeFavourite(movie: Movie) {
     this.preferiti.splice(this.preferiti.indexOf(movie), 1);
     this.favoritesCounter--;
-    movie.like=false;
+    movie.like = false;
   }
 
   private getErrorMess(status: number) {

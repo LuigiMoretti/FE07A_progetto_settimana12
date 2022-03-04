@@ -72,11 +72,13 @@ import { AuthService } from './auth/auth.service';
 export class NavbarComponent implements OnInit {
   isLoggedIn: boolean = false;
   welcomeUser!: string | undefined;
+  router: any;
 
   constructor(private authSrv: AuthService) {}
 
   onLogout() {
     this.authSrv.logout();
+
   }
 
   ngOnInit(): void {

@@ -49,7 +49,7 @@ export class LoginPage implements OnInit {
       await this.authSrv.login(form.value).toPromise()
       form.reset()
       this.errorMessage=undefined
-      this.router.navigate(['/users'])
+      this.router.navigate(['/movies']);
 
     } catch (error:any) {
       this.errorMessage = error

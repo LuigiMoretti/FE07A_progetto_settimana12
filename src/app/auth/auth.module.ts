@@ -5,7 +5,7 @@ import { SignupPage } from './signup.page';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-// import { TokenInterceptor } from './token.interceptor';
+ import { TokenInterceptor } from './token.interceptor';
 
 
 
@@ -29,11 +29,11 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     ])
   ],
   providers:[
-    // {
-    //   provide:HTTP_INTERCEPTORS,
-    //   useClass:TokenInterceptor,
-    //   multi:true
-    // }
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:TokenInterceptor,
+      multi:true
+    }
   ]
 })
 export class AuthModule { }

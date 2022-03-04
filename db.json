@@ -22,6 +22,13 @@
       "name": "cane",
       "surname": "bau",
       "id": 3
+    },
+    {
+      "email": "zebra@bru",
+      "password": "$2a$10$5u1H5.vySjvPMzCYw7.mweuFmThbZYLIMhauJXwASUN8DJdrZi5Re",
+      "name": "zebra",
+      "surname": "bru",
+      "id": 4
     }
   ],
   "movies-popular": [
