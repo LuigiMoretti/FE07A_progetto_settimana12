@@ -17,46 +17,80 @@ export class MovieService {
   favoritesCounter = 0;
   constructor(private http: HttpClient, private authSrv: AuthService) {}
 
-  get() {
-    return this.http.get<Movie[]>(`${this.baseURL}`).pipe(
-      catchError((err) => {
-        return throwError(this.getErrorMess(err.status));
-      })
-    );
-  }
-
   async buttaFilm(): Promise<void> {
     const user: AuthData = (await this.authSrv.user$
       .pipe(take(1))
       .toPromise()) as AuthData;
-      console.log(user.accessToken)
+    console.log(user.accessToken);
 
-    const movies =  await this.http
+    const movies = await this.http
       .get<Movie[]>('http://localhost:4201/api/movies-popular')
       .toPromise();
-      console.log(user.accessToken)
-      this.movies = movies;
+    console.log(user.accessToken);
+    this.movies = movies;
+  }
 
-    /*
-  ngOnInit():void{
-    this.loadMovies();
-  }
-  loadMovies(http: HttpClient): void {
-  this.http.get('http://localhost:4200/api/movies-popular').subscribe((res) => {
-    movies = <Movie[]>res;
-    console.log(res);
-  }); */
-  }
-  addFavorite(movie: Movie) {
-    this.preferiti.push(movie);
+  async addFavorite(movie: Movie) {
     this.favoritesCounter++;
     movie.like = true;
+    let count = 0;
+    const user: AuthData = (await this.authSrv.user$
+      .pipe(take(1))
+      .toPromise()) as AuthData;
+    const data: Favourite = {
+      movieId: movie.id,
+      userId: user.user.id,
+      id: count++,
+    };
+    console.log(data);
+    return this.http.post<Favourite>(
+      'http://localhost:4201/api/favourites',
+      data
+    );
   }
 
-  removeFavourite(movie: Movie) {
+  async getFavourite(): Promise<void> {
+    this.preferiti = [];
+    const user: AuthData = (await this.authSrv.user$
+      .pipe(take(1))
+      .toPromise()) as AuthData;
+    this.http
+      .get<Favourite[]>(
+        `http://localhost:4201/api/favourites?userId=${user.user.id}`
+      )
+      .subscribe(async (res) => {
+        console.log(res);
+        console.log(this.movies);
+        await this.buttaFilm();
+        for (let i of res) {
+          for (let j of this.movies!) {
+            if (i.movieId == j.id) {
+              this.preferiti.push(j);
+              this.preferiti[this.preferiti.indexOf(j)].codicePreferito = i.id;
+              j.like = true;
+            }
+          }
+        }
+        console.log(this.preferiti);
+      });
+  }
+  async removeFavourite(movie: Movie) {
+    const user: AuthData = (await this.authSrv.user$
+      .pipe(take(1))
+      .toPromise()) as AuthData;
+    console.log(user.accessToken);
     this.preferiti.splice(this.preferiti.indexOf(movie), 1);
     this.favoritesCounter--;
     movie.like = false;
+    // const moviesget = await this.http
+    //   .get<Favourite>(`http://localhost:4201/api/favourites?id=${movie.codicePreferito}`)
+    //   .toPromise();
+    // console.log(user.accessToken);
+    // console.log(moviesget);
+
+    this.http.delete(
+      `http://localhost:4201/api/favourites?id=${movie.codicePreferito}`
+    );
   }
 
   private getErrorMess(status: number) {
