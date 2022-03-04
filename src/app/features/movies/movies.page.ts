@@ -61,20 +61,18 @@ import { HttpClient } from '@angular/common/http';
       </div>
     </div>
   `,
-  styles: [`
-
-  `],
+  styles: [``],
 })
 export class MoviesPage implements OnInit {
   constructor(private movieSrv: MovieService, private http: HttpClient) {}
-  movies: Movie[] | undefined;
+  movies!: Movie[] | undefined;
   preferiti: Movie[] | undefined;
   ngOnInit(): void {
     setInterval(() => {
       this.movies = this.movieSrv.movies;
       this.preferiti = this.movieSrv.preferiti;
     }, 20);
-    if (!this.movies) {
+    if (!this.movieSrv.movies) {
       this.movieSrv.buttaFilm();
     }
   }
