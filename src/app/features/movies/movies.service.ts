@@ -43,7 +43,7 @@ export class MovieService {
     const data: Favourite = {
       movieId: movie.id,
       userId: user.user.id,
-      id: count++,
+      id: count++
     };
     console.log(data);
     return this.http.post<Favourite>(
@@ -89,17 +89,4 @@ export class MovieService {
       .subscribe();
   }
 
-  private getErrorMess(status: number) {
-    let mess = '';
-    switch (status) {
-      case 404:
-        mess = 'errore nella chiamata';
-        break;
-
-      default:
-        mess = 'qualcosa non va controlla la connessione';
-        break;
-    }
-    return mess;
-  }
 }
