@@ -79,8 +79,6 @@ export class MovieService {
       .pipe(take(1))
       .toPromise()) as AuthData;
     console.log(user.accessToken);
-    this.preferiti.splice(this.preferiti.indexOf(movie), 1);
-    this.favoritesCounter--;
     movie.like = false;
     // const moviesget = await this.http
     //   .get<Favourite>(`http://localhost:4201/api/favourites?id=${movie.codicePreferito}`)
@@ -89,8 +87,8 @@ export class MovieService {
     // console.log(moviesget);
 
     this.http.delete(
-      `http://localhost:4201/api/favourites?id=${movie.codicePreferito}`
-    );
+      `http://localhost:4201/api/favourites/${movie.codicePreferito}`
+    ).subscribe();
   }
 
   private getErrorMess(status: number) {
