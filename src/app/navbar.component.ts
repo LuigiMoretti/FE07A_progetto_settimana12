@@ -38,8 +38,8 @@ import { AuthService } from './auth/auth.service';
             </li>
             <li class="nav-item" *ngIf="!isLoggedIn">
               <a
-              class="nav-link active"
-              aria-current="page"
+                class="nav-link active"
+                aria-current="page"
                 [routerLink]="['/']"
                 routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }"
@@ -56,18 +56,30 @@ import { AuthService } from './auth/auth.service';
             </li>
           </ul>
           <div *ngIf="isLoggedIn">
-            <p class="d-inline username-welc-back">Bentornato <span class="fst-italic fw-bolder">{{welcomeUser}}</span></p>
-            <button class="btn btn-danger mx-3" (click)="onLogout()">logout</button>
+            <p class="d-inline username-welc-back">
+              Bentornato
+              <span class="fst-italic fw-bolder">{{ welcomeUser }}</span>
+            </p>
+            <button class="btn btn-danger mx-3" (click)="onLogout()">
+              logout
+            </button>
           </div>
         </div>
       </div>
     </nav>
   `,
-  styles: [`
-    .username-welc-back {
-      transform: translateY(30%);
-    }
-  `],
+  styles: [
+    `
+      .username-welc-back {
+        transform: translateY(30%);
+      }
+      .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+      }
+    `,
+  ],
 })
 export class NavbarComponent implements OnInit {
   isLoggedIn: boolean = false;
@@ -78,16 +90,15 @@ export class NavbarComponent implements OnInit {
 
   onLogout() {
     this.authSrv.logout();
-
   }
 
   ngOnInit(): void {
     this.authSrv.isLoggedIn$.subscribe((isLoggedIn) => {
       this.isLoggedIn = isLoggedIn;
-    })
+    });
 
     this.authSrv.user$.subscribe((data) => {
       this.welcomeUser = data?.user.name;
-    })
+    });
   }
 }
