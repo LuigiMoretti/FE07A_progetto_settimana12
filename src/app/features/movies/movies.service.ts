@@ -49,7 +49,7 @@ export class MovieService {
 
   async getFavourite(): Promise<Movie[]> {
     let preferitiProvvisorio: Movie[] = [];
-    this.preferiti = undefined
+    this.preferiti = undefined;
     const user: AuthData = (await this.authSrv.user$
       .pipe(take(1))
       .toPromise()) as AuthData;
